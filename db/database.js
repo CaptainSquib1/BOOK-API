@@ -12,7 +12,8 @@ db.exec(`
         name TEXT NOT NULL,
         author TEXT NOT NULL,
         description TEXT,
-        genre TEXT
+        genre TEXT,
+        image TEXT DEFAULT NULL,
     );
     CREATE TABLE IF NOT EXISTS shelves (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
