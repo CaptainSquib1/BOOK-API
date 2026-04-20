@@ -20,8 +20,12 @@ require('./db/database');
 
 
 // routes
-// const booksRouter = require("./routes/books");
-// app.use('/books', booksRouter);
+const shelvesRouter = require("./routes/shelves");
+app.use('/shelves', shelvesRouter);
+
+const booksRouter = require("./routes/books");
+app.use("/books", booksRouter);
+
 
 // basic health check
 app.get("/health", (req,res)=>{

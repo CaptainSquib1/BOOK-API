@@ -4,7 +4,9 @@ CREATE TABLE books (
                            name TEXT NOT NULL,
                            author TEXT NOT NULL,
                            description TEXT,
-                           genre TEXT
+                           genre TEXT,
+                           timeofaddition TEXT,
+                           image TEXT DEFAULT NULL
 );
 -- create location features
 CREATE TABLE shelves (
@@ -23,17 +25,19 @@ CREATE TABLE shelves_with_books (
 
 );
 
-INSERT INTO books (name, author, description, genre) VALUES ('Downtown', '123 Main St.', 'Very good!', '9-2'),
-                                                                 ('Uptown', '456 North St.', 'Very bad :(', '2-9');
+INSERT INTO books (name, author, description, genre, timeofaddition, image) VALUES ('Hobbit', 'JRR Tolkein', 'Very hobbitsy', 'Fiction', 'Idk', 'Newbook.png'),
+                                                                 ('Sherlock Holmes', 'Sir Arthur Conan Doyle', 'Elementary', 'Mystery', 'Watson? What is the time?','');
 
-INSERT INTO shelves (shelf_name,location) VALUES ('Very good!', 'weow'),
-                                                   ('Access to the playground','weow'),
-                                                   ('Safe','weow'),
-                                                   ('Dog friendly','weow'),
-                                                   ('24/7','weow');
+INSERT INTO shelves (shelf_name,location) VALUES ('Brown', 'Upstairs'),
+                                                   ('Black','1st Floor'),
+                                                   ('Yellow','Downstairs'),
+                                                   ('Striped','2nd Floor'),
+                                                   ('Orange','Da Basement');
 
-INSERT INTO shelves_with_books (book_id, shelf_id) VALUES (1,1),
-                                                                     (1,2),
-                                                                     (2,1),
-                                                                     (2,4),
-                                                                     (2,5)
+INSERT INTO shelves_with_books (book_id, shelf_id) VALUES (1,1);
+
+
+
+DROP TABLE books;
+DROP TABLE shelves;
+DROP TABLE shelves_with_books;
