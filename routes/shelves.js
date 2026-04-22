@@ -59,8 +59,8 @@ Content-Type: application/json
 }
  */
 
-router.post('/:shelfId/books', (req, res) => {
-    const { shelfId } = req.params
+router.post('/', (req, res) => {
+    const { shelfId } = req.body
     const { bookId } = req.body;
     console.log('shelfId:', shelfId, 'bookId:', bookId)
 
@@ -80,6 +80,8 @@ router.post('/:shelfId/books', (req, res) => {
             return res.status(404).json({ error: 'Book not found' });
         }
 
+        //check all shelves for book placement
+        // same shelf
         const existing = db.prepare(`
             SELECT id FROM shelves_with_books 
             WHERE shelf_id = ? AND book_id = ?
@@ -87,6 +89,15 @@ router.post('/:shelfId/books', (req, res) => {
 
         if (existing) {
             return res.status(405).json({ error: 'Book is already on this shelf' });
+        }
+
+        //other shelf
+        const othershelf = db.prepare(`
+            SELECT id FROM shelves_with_books
+            WHERE book_id = ?
+            `)
+        if (othershelf) {
+            return res.status(405).json({ error: 'Book is already on a shelf' });
         }
 
         // Add the book to the shelf

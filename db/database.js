@@ -13,7 +13,7 @@ db.exec(`
         author TEXT NOT NULL,
         description TEXT,
         genre TEXT,
-        image TEXT DEFAULT NULL,
+        image TEXT DEFAULT NULL
     );
     CREATE TABLE IF NOT EXISTS shelves (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,7 +26,6 @@ db.exec(`
         shelf_id INTEGER NOT NULL,
         FOREIGN KEY (book_id) REFERENCES books(id),
         FOREIGN KEY (shelf_id) REFERENCES shelves(id)
-
     );
 `);
 
