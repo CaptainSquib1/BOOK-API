@@ -88,14 +88,14 @@ router.post('/', (req, res) => {
         `).get(shelfId, bookId);
 
         if (existing) {
-            return res.status(405).json({ error: 'Book is already on this shelf' });
+            return res.status(409).json({ error: 'Book is already on this shelf' });
         }
 
         //other shelf
         const othershelf = db.prepare(`
             SELECT id FROM shelves_with_books
             WHERE book_id = ?
-            `)
+            `).get(bookId);
         if (othershelf) {
             return res.status(405).json({ error: 'Book is already on a shelf' });
         }
@@ -112,6 +112,41 @@ router.post('/', (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Failed to add book to shelf' });
     }
+});
+
+router.delete('/', (req, res) => {
+    const { shelfId } = req.body
+    const { bookId } = req.body;
+    console.log('shelfId:', shelfId, 'bookId:', bookId)
+
+    if (!bookId) {
+        return res.status(400).json({ error: 'bookId is required' });
+    }
+    if (!shelfId) {
+        return res.status(400).json({ error: 'shelfId is required' });
+    }
+
+    try {
+        const existing = db.prepare(`
+            SELECT id FROM shelves_with_books 
+            WHERE shelf_id = ? AND book_id = ?
+        `).get(shelfId, bookId);
+
+        if (!existing) {
+            return res.status(405).json({ error: 'Book is not on shelf' });
+        }
+
+        db.prepare(`
+            DELETE FROM shelves_with_books
+            WHERE shelf_id = ? AND book_id = ?
+        `).run(shelfId, bookId)
+
+        res.status(200).json({ message: 'Book removed from shelf', shelfId, bookId });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to remove book from shelf' });
+    }
+
 });
 
 module.exports = router;

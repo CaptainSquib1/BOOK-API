@@ -13,6 +13,7 @@ db.exec(`
         author TEXT NOT NULL,
         description TEXT,
         genre TEXT,
+        timeofaddition TEXT,
         image TEXT DEFAULT NULL
     );
     CREATE TABLE IF NOT EXISTS shelves (

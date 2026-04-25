@@ -37,11 +37,11 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {bookName, author, description, genre, timeofaddition, image } = req.body;
-    console.log('bookName', bookName, 'author', author, 'description', description, 'genre', genre, 'timeofaddition', timeofaddition, 'image', image);
+    const {bookName, author, description, genre, image } = req.body;
+    console.log('bookName:', bookName, 'author:', author, 'description:', description, 'genre:', genre, 'image:', image);
 
     if (!bookName) {
-        return res.status(400).json({ error: 'bookId is required' });
+        return res.status(400).json({ error: 'bookName is required' });
     }
     if (!author) {
         return res.status(400).json({ error: 'author is required' });
@@ -54,16 +54,16 @@ router.post('/', (req, res) => {
         `).get(bookName);
 
         if (existing) {
-            return res.status(405).json({ error: 'Book already in database' });
+            return res.status(409).json({ error: 'Book already in database' });
         }
 
         // Add the book to the shelf
         db.prepare(`
-            INSERT INTO books (name, author, description, genre, timofaddition, image) 
+            INSERT INTO books (name, author, description, genre, timeofaddition, image) 
             VALUES (?, ?, ?, ?, current_date, ?)
-        `).run(shelfId, bookId);
+        `).run(bookName, author, description, genre, image);
 
-        res.status(201).json({ message: 'Book added to shelf', shelfId, bookId });
+        res.status(201).json({ message: 'Book added to shelf', bookName, author });
 
     } catch (error) {
         console.error(error);

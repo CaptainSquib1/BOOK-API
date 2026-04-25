@@ -21,7 +21,7 @@ CREATE TABLE shelves_with_books (
                                          book_id INTEGER NOT NULL,
                                          shelf_id INTEGER NOT NULL,
                                          FOREIGN KEY (book_id) REFERENCES books(id),
-                                         FOREIGN KEY (shelf_id) REFERENCES shelves_with_books(id)
+                                         FOREIGN KEY (shelf_id) REFERENCES shelves(id)
 
 );
 
