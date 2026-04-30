@@ -14,7 +14,7 @@ db.exec(`
         description TEXT,
         genre TEXT,
         timeofaddition TEXT,
-        image TEXT DEFAULT NULL
+        image TEXT DEFAULT 'default.png'
     );
     CREATE TABLE IF NOT EXISTS shelves (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,6 +28,11 @@ db.exec(`
         FOREIGN KEY (book_id) REFERENCES books(id),
         FOREIGN KEY (shelf_id) REFERENCES shelves(id)
     );
+    INSERT INTO shelves (shelf_name,location) VALUES ('Brown', 'Upstairs'),
+                                                     ('Black','1st Floor'),
+                                                     ('Yellow','Downstairs'),
+                                                     ('Striped','2nd Floor'),
+                                                     ('Orange','Da Basement');
 `);
 
 module.exports = db;
