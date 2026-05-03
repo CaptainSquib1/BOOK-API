@@ -1,0 +1,12 @@
+Database.js
+1. Creates initial API connection to database/creates if not existing
+2. Has some prefill data for shelves
+books.js and shelves.js
+Endpoints:
+GET requests - www.captainsquib.com/api/shelves Grabs all of the shelves as well as the books on each shelf. Returns data as json: [{"id": 2, "shelf_name": "Black", "books": []}] can also be specified to specific shelf id by adding /#
+www.captainsquib.com/api/books Grabs all books or by id if specified with /#. Returns data like [{ "id": 6, "name": "Cool", "author": "Weow", "description": "", "genre": "", "timeofaddition": "2026-05-03", "image": "Newbook.png"}]
+POST request -
+www.captainsquib.com/api/shelves Creates association between a book to a shelf requires json data to have [{"shelfId": 1, "bookId":1}]
+www.captainsquib.com/api/books Adds a new book requires json data to have [{"id": 6, "name": "Cool", "author": "Weow", "description": "", "genre": "", "image": "Newbook.png"}
+DELETE request -
+www.captainsquib.com/api/shelves Deletes association of books to shelves requires json data to have [{"shelfId": 1, "bookId":1}]
